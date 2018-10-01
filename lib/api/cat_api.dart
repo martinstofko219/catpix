@@ -3,7 +3,7 @@ import 'dart:convert';
 
 import 'package:http/http.dart' as http;
 
-import './cat.dart';
+import '../models/cat.dart';
 
 class CatApi {
   final String _apiUrlRandomCat =
