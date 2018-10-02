@@ -7,7 +7,7 @@ import '../models/cat.dart';
 
 class CatApi {
   final String _apiUrlRandomCat =
-      'https://api.thecatapi.com/v1/images/search?mime_types=jpg,png&size=mid';
+      'https://api.thecatapi.com/v1/images/search?format=json&mime_types=jpg,png&size=full&category_ids=5';
 
   Future<Cat> fetchRandomCat() async {
     final response = await http.get(_apiUrlRandomCat);

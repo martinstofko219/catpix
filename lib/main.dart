@@ -12,7 +12,7 @@ class MyApp extends StatefulWidget {
 
 class _MyAppState extends State<MyApp> {
   final _catApi = new CatApi();
-  Cat _randomCat;
+  Cat _cat;
 
   @override
   void initState() {
@@ -35,7 +35,7 @@ class _MyAppState extends State<MyApp> {
         floatingActionButton: FloatingActionButton(
           child: Icon(Icons.refresh),
           onPressed: () {
-            setState(() => _randomCat = null);
+            setState(() => _cat = null);
             _loadRandomCat();
           },
         ),
@@ -52,15 +52,15 @@ class _MyAppState extends State<MyApp> {
   void _loadRandomCat() async {
     final Cat newCat = await _catApi.fetchRandomCat();
     setState(() {
-      _randomCat = newCat;
+      _cat = newCat;
     });
   }
 
   Widget _buildCatImage() {
-    if (_randomCat != null) {
+    if (_cat != null) {
       return Expanded(
         child: Image.network(
-          _randomCat.url,
+          _cat.url,
           fit: BoxFit.cover,
         ),
       );
