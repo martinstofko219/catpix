@@ -31,12 +31,13 @@ class _MyAppState extends State<MyApp> {
       home: Scaffold(
         appBar: AppBar(
           title: Text('CatPix'),
-          actions: <Widget>[
-            IconButton(
-              icon: Icon(Icons.refresh),
-              onPressed: _loadRandomCat,
-            ),
-          ],
+        ),
+        floatingActionButton: FloatingActionButton(
+          child: Icon(Icons.refresh),
+          onPressed: () {
+            setState(() => _randomCat = null);
+            _loadRandomCat();
+          },
         ),
         body: Column(
           mainAxisAlignment: MainAxisAlignment.center,
@@ -61,7 +62,6 @@ class _MyAppState extends State<MyApp> {
         child: Image.network(
           _randomCat.url,
           fit: BoxFit.cover,
-          alignment: Alignment.center,
         ),
       );
     } else {
