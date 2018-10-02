@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
 
+import './api/cat_api.dart';
+import './models/cat.dart';
+
 void main() => runApp(new MyApp());
 
 class MyApp extends StatefulWidget {
@@ -8,8 +11,14 @@ class MyApp extends StatefulWidget {
 }
 
 class _MyAppState extends State<MyApp> {
-  final String _catApiUrl =
-      'https://api.thecatapi.com/v1/images/search?format=src&size=full';
+  final _catApi = new CatApi();
+  Cat _randomCat;
+
+  @override
+  void initState() {
+    super.initState();
+    _loadRandomCat();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -17,23 +26,48 @@ class _MyAppState extends State<MyApp> {
       title: 'CatPix',
       theme: new ThemeData(
         primarySwatch: Colors.red,
-        accentColor: Colors.tealAccent,
+        accentColor: Colors.cyan,
       ),
       home: Scaffold(
         appBar: AppBar(
           title: Text('CatPix'),
+          actions: <Widget>[
+            IconButton(
+              icon: Icon(Icons.refresh),
+              onPressed: _loadRandomCat,
+            ),
+          ],
         ),
         body: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
-            Expanded(
-              child: Image.network(
-                _catApiUrl,
-                fit: BoxFit.cover,
-              ),
-            ),
+            _buildCatImage(),
           ],
         ),
       ),
     );
+  }
+
+  void _loadRandomCat() async {
+    final Cat newCat = await _catApi.fetchRandomCat();
+    setState(() {
+      _randomCat = newCat;
+    });
+  }
+
+  Widget _buildCatImage() {
+    if (_randomCat != null) {
+      return Expanded(
+        child: Image.network(
+          _randomCat.url,
+          fit: BoxFit.cover,
+          alignment: Alignment.center,
+        ),
+      );
+    } else {
+      return Center(
+        child: CircularProgressIndicator(),
+      );
+    }
   }
 }
