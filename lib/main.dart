@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'package:flutter/material.dart';
 
 import './api/cat_api.dart';
@@ -35,7 +36,8 @@ class _MyAppState extends State<MyApp> {
 
   void _loadRandomCat() async {
     setState(() => _cat = null);
-    final Cat newCat = await _catApi.fetchRandomCat();
+    // delay by 500ms to allow time for circular progress indicator
+    final Cat newCat = await Future.delayed(Duration(milliseconds: 500), _catApi.fetchRandomCat);
     setState(() => _cat = newCat);
   }
 }
