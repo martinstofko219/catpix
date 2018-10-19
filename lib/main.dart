@@ -27,8 +27,8 @@ class _MyAppState extends State<MyApp> {
     return new MaterialApp(
       title: 'CatPix',
       theme: new ThemeData(
-        primarySwatch: Colors.deepOrange,
-        accentColor: Colors.cyan,
+        primarySwatch: Colors.pink,
+        accentColor: Colors.tealAccent.shade700,
       ),
       home: HomePage(_cat, _loadRandomCat),
     );
